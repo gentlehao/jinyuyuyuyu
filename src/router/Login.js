@@ -2,15 +2,15 @@ export default [
     {
         path: "/login",
         name: "login",
-        component: () => import('../views/Login/index.vue'),
+        component: () => import('../views/Login'),
+        redirect: {
+            name: "loginIndex"
+        },
         children: [
             {
-                path: "/",
+                path: "loginIndex",
                 name: "loginIndex",
                 component: () => import('../views/Login/Login.vue'),
-                meta: {
-                    keepAlive: true
-                },
             },
         ]
     },
