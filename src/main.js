@@ -7,12 +7,18 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import VCharts from 'v-charts'
 
+import filters from '@/modules/filters'
+import methods from '@/modules/methods'
+
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
 Vue.use(VCharts)
 
-new Vue({
+Vue.use(filters)
+Vue.use(methods)
+
+export default new Vue({
   router,
   store,
   render: h => h(App)
