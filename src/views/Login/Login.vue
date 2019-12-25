@@ -1,63 +1,55 @@
 <template>
-  <div class="Login2">
+  <div class="Login">
     <div :class="sign?'dowebok right-panel-active':'dowebok'" id="dowebok">
       <div class="form-container sign-up-container">
-        <form action="#">
+        <el-form :model="formSignUp" :rules="ruleSignUp" label-width="90px" ref="formSignUp">
           <h1>注册</h1>
-          <div class="social-container">
-            <a href="#" class="social">
-              <i class="el-icon-cold-drink"></i>
-            </a>
-            <a href="#" class="social">
-              <i class="el-icon-ice-cream"></i>
-            </a>
-            <a href="#" class="social">
-              <i class="el-icon-chicken"></i>
-            </a>
-          </div>
-          <span>或使用邮箱注册</span>
-          <input type="text" placeholder="姓名" />
-          <input type="email" placeholder="电子邮箱" />
-          <input type="password" placeholder="密码" />
-          <button>注册</button>
-        </form>
+          <span>您需要使用手机号注册</span>
+          <el-form-item label="昵称:" prop="name">
+            <el-input v-model="formSignUp.name" type="text" placeholder="请输入昵称" />
+          </el-form-item>
+          <el-form-item label="手机号:" prop="phone">
+            <el-input v-model="formSignUp.phone" type="phone" placeholder="请输入手机号" />
+          </el-form-item>
+          <el-form-item label="密码:" prop="password">
+            <el-input v-model="formSignUp.password" type="password" placeholder="请输入密码" />
+          </el-form-item>
+          <el-form-item label="确认密码:" prop="confirmPwd">
+            <el-input v-model="formSignUp.confirmPwd" type="password" placeholder="请再次输入密码" />
+          </el-form-item>
+          <button @click="submitForm('formSignUp')">注册</button>
+        </el-form>
       </div>
       <div class="form-container sign-in-container">
-        <form action="#">
+        <el-form :model="formSignIn" :rules="ruleSignIn" ref="formSignIn">
           <h1>登录</h1>
-          <div class="social-container">
-            <a href="#" class="social">
-              <i class="el-icon-cold-drink"></i>
-            </a>
-            <a href="#" class="social">
-              <i class="el-icon-ice-cream"></i>
-            </a>
-            <a href="#" class="social">
-              <i class="el-icon-chicken"></i>
-            </a>
-          </div>
-          <span>或使用您的帐号</span>
-          <input type="email" placeholder="电子邮箱" />
-          <input type="password" placeholder="密码" />
+          <span>或使用您的密码</span>
+          <el-form-item label="手机号：" prop="phone">
+            <el-input v-model="formSignIn.phone" type="phone" placeholder="请输入手机号" />
+          </el-form-item>
+          <el-form-item label="密码：" prop="password">
+            <el-input v-model="formSignIn.password" type="password" placeholder="请输入密码" />
+          </el-form-item>
           <a href="#">忘记密码？</a>
-          <button>登录</button>
-        </form>
+          <button @click="submitForm('formSignIn')">登录</button>
+        </el-form>
       </div>
       <div class="overlay-container">
         <div class="overlay">
           <div class="overlay-panel overlay-left">
             <h1>已有帐号？</h1>
             <p>请使用您的帐号进行登录</p>
-            <button class="ghost" id="signIn" @click="signIn">登录</button>
+            <button class="ghost" id="signIn" @click="toSignIn">登录</button>
           </div>
           <div class="overlay-panel overlay-right">
             <h1>没有帐号？</h1>
             <p>立即注册加入我们，和我们一起开始旅程吧</p>
-            <button class="ghost" id="signUp" @click="signUp">注册</button>
+            <button class="ghost" id="signUp" @click="toSignUp">注册</button>
           </div>
         </div>
       </div>
     </div>
+    
   </div>
 </template>  
 
@@ -65,17 +57,68 @@
 export default {
   name: 'loginIndex',
   data() {
+    // let validatePhone = (rule, value, callback) => {
+
+    // }
+    // let validatePwd = (rule, value, callback) => {
+      
+    // }
+    // let validateConfPwd = (rule, value, callback) => {
+      
+    // }
     return {
-      sign: false
+      sign: false, 
+      formSignUp: {
+        name: '',
+        phone: '',
+        password: '',
+        confirmPwd: ''
+      }, // 注册校验字段
+      formSignIn: {
+        phone: '',
+        password: '',
+      }, // 登录校验字段
+      ruleSignUp: {
+        name: [
+          { min: 1, max: 10, message: '长度在 1 到 10 个字符', trigger: 'blur' }
+        ],
+        phone: [
+          { required: true, message: '请输入手机号!', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码!', trigger: 'blur' }
+        ],
+        confirmPwd: [
+          { required: true, message: '请再次输入密码!', trigger: 'blur' }
+        ]
+      }, // 注册校验规则
+      ruleSignIn: {
+        phone: [
+          { required: true, message: '请输入手机号!', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码!', trigger: 'blur' }
+        ]
+      }, // 登录校验规则
     }
   },
   methods: {
-    signIn() {
+    toSignIn() {
       this.sign = false
     },
-    signUp() {
+    toSignUp() {
       this.sign = true
-    }
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!');
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
   }
 }
 </script>
@@ -85,7 +128,7 @@ export default {
 * {
   box-sizing: border-box;
 }
-.Login2 {
+.Login {
   width: 100%;
   height: 100vh;
   background: #ededed;
@@ -127,15 +170,19 @@ a {
   margin: 0px auto;
 }
 
-.form-container form {
+.form-container form{
   background: #fff;
   display: flex;
   flex-direction: column;
-  padding: 0 50px;
   height: 100%;
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.form-container .el-form-item__content ,.form-container .el-form-item {
+  margin-bottom: 25px;
+  width: 80%;
 }
 
 .social-container {
@@ -157,19 +204,10 @@ a {
   background-color: #eee;
 }
 
-.form-container input {
-  background: #eee;
-  border: none;
-  padding: 12px 15px;
-  margin: 8px 0;
-  width: 100%;
-  outline: none;
-}
-
 button {
   border-radius: 20px;
-  border: 1px solid #ff4b2b;
-  background: #ff4b2b;
+  border: 1px solid#FFF0F5;
+  background:#00BFFF;
   color: #fff;
   font-size: 12px;
   font-weight: bold;
@@ -225,8 +263,8 @@ button.ghost {
 }
 
 .overlay {
-  background: #ff416c;
-  background: linear-gradient(to right, #ff4b2b, #ff416c) no-repeat 0 0 / cover;
+  background:#00BFFF;
+  background: linear-gradient(to right, #00BFFF,#4169E1) no-repeat 0 0 / cover;
   color: #fff;
   position: relative;
   left: -100%;
