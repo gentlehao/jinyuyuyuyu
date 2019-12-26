@@ -10,6 +10,8 @@ import VCharts from 'v-charts'
 import filters from '@/modules/filters'
 import methods from '@/modules/methods'
 
+import '@/assets/css/base.css'
+
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)

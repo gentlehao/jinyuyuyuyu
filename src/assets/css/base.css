@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+/* 基础 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html body {
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+}
+ul ol {
+    list-style: none;
+}
+input select textarea button {
+    border: none;
+    outline: none;
+    vertical-align: middle;
+}
