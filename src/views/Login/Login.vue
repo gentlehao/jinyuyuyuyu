@@ -2,9 +2,9 @@
   <div class="Login">
     <div :class="sign?'dowebok right-panel-active':'dowebok'" id="dowebok">
       <div class="form-container sign-up-container">
-        <el-form :model="formSignUp" :rules="ruleSignUp" label-width="90px" ref="formSignUp">
+        <el-form :inline="true" :model="formSignUp" :rules="ruleSignUp" label-width="90px" ref="formSignUp">
           <h1>注册</h1>
-          <span>您需要使用手机号注册</span>
+          <span class="mgb-20">您需要使用手机号注册</span>
           <el-form-item label="昵称:" prop="name">
             <el-input v-model="formSignUp.name" type="text" placeholder="请输入昵称" />
           </el-form-item>
@@ -30,7 +30,11 @@
           <el-form-item label="密码：" prop="password">
             <el-input v-model="formSignIn.password" type="password" placeholder="请输入密码" />
           </el-form-item>
-          <a href="#">忘记密码？</a>
+          <el-form-item class="identify_out" label="验证码：" prop="identifyCode">
+            <el-input v-model="formSignIn.identifyCode" type="text" placeholder="请输入验证码" />
+            <identify :identifyCode="identifyCode" @click.native="refreshCode"></identify>
+          </el-form-item>
+          <a>忘记密码？</a>
           <button @click="submitForm('formSignIn')">登录</button>
         </el-form>
       </div>
@@ -54,20 +58,30 @@
 </template>  
 
 <script>
+import identify from '@/components/Identify'
 export default {
   name: 'loginIndex',
   data() {
-    // let validatePhone = (rule, value, callback) => {
-
-    // }
+    let validatePhone = (rule, value, callback) => {
+      let str = /^1[3|4|5|7|8][0-9]{9}$/
+      if(!str.test(value)){
+        callback(new Error('您输入的手机号不合法!'))
+      }
+    }
     // let validatePwd = (rule, value, callback) => {
       
     // }
     // let validateConfPwd = (rule, value, callback) => {
       
     // }
+    let validateIdCode = (rule, value, callback) => {
+      if(value!==this.identifyCode){
+        callback(new Error('验证码有误!'))
+      }
+    }
     return {
       sign: false, 
+      identifyCode: '3782', // 验证码
       formSignUp: {
         name: '',
         phone: '',
@@ -77,13 +91,15 @@ export default {
       formSignIn: {
         phone: '',
         password: '',
+        identifyCode: ''
       }, // 登录校验字段
       ruleSignUp: {
         name: [
           { min: 1, max: 10, message: '长度在 1 到 10 个字符', trigger: 'blur' }
         ],
         phone: [
-          { required: true, message: '请输入手机号!', trigger: 'blur' }
+          { required: true, message: '请输入手机号!', trigger: 'blur' },
+          { validator: validatePhone, trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入密码!', trigger: 'blur' }
@@ -94,20 +110,37 @@ export default {
       }, // 注册校验规则
       ruleSignIn: {
         phone: [
-          { required: true, message: '请输入手机号!', trigger: 'blur' }
+          { required: true, message: '请输入手机号!', trigger: 'blur' },
+          { validator: validatePhone, trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入密码!', trigger: 'blur' }
+        ],
+        identifyCode: [
+          { required: true, message: '请输入验证码!', trigger: 'blur' },
+          { validator: validateIdCode, trigger: 'blur' }
         ]
       }, // 登录校验规则
     }
   },
+  mounted() {
+    this.identifyCode = this.makeCode()
+    console.log(this.identifyCode)
+  },
   methods: {
+    //切换登录
     toSignIn() {
       this.sign = false
     },
+
+    //切换注册
     toSignUp() {
       this.sign = true
+    },
+    
+    //刷新验证码
+    refreshCode() {
+      this.identifyCode = this.makeCode()
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
@@ -119,11 +152,13 @@ export default {
         }
       });
     },
+  },
+  components: {
+    identify
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 * {
   box-sizing: border-box;
@@ -180,8 +215,8 @@ a {
   text-align: center;
 }
 
-.form-container .el-form-item__content ,.form-container .el-form-item {
-  margin-bottom: 25px;
+.sign-in-container .el-form-item__content ,.sign-in-container .el-form-item {
+  margin-bottom: 10px;
   width: 80%;
 }
 
@@ -249,6 +284,10 @@ button.ghost {
   width: 50%;
   z-index: 1;
   opacity: 0;
+}
+
+.identify_out{
+  position: relative;
 }
 
 .overlay-container {

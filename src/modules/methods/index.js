@@ -1,8 +1,9 @@
 import Vue from '@/main'
 
+//路由跳转
 const goTo = (_blank,path,data)=>{
     if(_blank){
-        console.log(Vue)
+        //打开新标签页
         const routeUrl = Vue.$router.resolve({
             path: path,
             query: data
@@ -10,6 +11,7 @@ const goTo = (_blank,path,data)=>{
         window.open(routeUrl.href, '_blank')
     }
     else{
+        //不打开新标签页
         Vue.$router.push({
             name: path,
             params: data
@@ -17,8 +19,14 @@ const goTo = (_blank,path,data)=>{
     }
 }
 
+//图形验证码生成
+const makeCode = ()=> {
+    return Math.random().toString(36).substring(3,7)
+}
+
 export default {
-    install(Vue,options) {
+    install(Vue) {
         Vue.prototype.goTo = goTo
+        Vue.prototype.makeCode = makeCode
     }
 }
