@@ -2,7 +2,7 @@
   <div class="Login">
     <div :class="sign?'dowebok right-panel-active':'dowebok'" id="dowebok">
       <div class="form-container sign-up-container">
-        <el-form :inline="true" :model="formSignUp" :rules="ruleSignUp" label-width="90px" ref="formSignUp">
+        <el-form :inline="true" :model="formSignUp" :rules="ruleSignUp" label-width="100px" ref="formSignUp">
           <h1>注册</h1>
           <span class="mgb-20">您需要使用手机号注册</span>
           <el-form-item label="昵称:" prop="name">
@@ -11,13 +11,19 @@
           <el-form-item label="手机号:" prop="phone">
             <el-input v-model="formSignUp.phone" type="phone" placeholder="请输入手机号" />
           </el-form-item>
-          <el-form-item label="密码:" prop="password">
+          <el-form-item label="短信验证码:" prop="msgCode">
+            <el-input v-model="formSignUp.msgCode" type="text" placeholder="请输入短信验证码" />
+          </el-form-item>
+          <!-- <el-form-item label="密码:" prop="password">
             <el-input v-model="formSignUp.password" type="password" placeholder="请输入密码" />
           </el-form-item>
           <el-form-item label="确认密码:" prop="confirmPwd">
             <el-input v-model="formSignUp.confirmPwd" type="password" placeholder="请再次输入密码" />
+          </el-form-item> -->
+          <el-form-item>
+            <msg-code></msg-code>
+            <button class="ghost mgl-20" @click="submitForm('formSignUp')">注册</button>
           </el-form-item>
-          <button @click="submitForm('formSignUp')">注册</button>
         </el-form>
       </div>
       <div class="form-container sign-in-container">
@@ -35,7 +41,7 @@
             <identify :identifyCode="identifyCode" @click.native="refreshCode"></identify>
           </el-form-item>
           <a>忘记密码？</a>
-          <button @click="submitForm('formSignIn')">登录</button>
+          <button class="ghost" @click="submitForm('formSignIn')">登录</button>
         </el-form>
       </div>
       <div class="overlay-container">
@@ -43,22 +49,23 @@
           <div class="overlay-panel overlay-left">
             <h1>已有帐号？</h1>
             <p>请使用您的帐号进行登录</p>
-            <button class="ghost" id="signIn" @click="toSignIn">登录</button>
+            <el-button class="ghost" id="signIn" @click="toSignIn">登录</el-button>
           </div>
           <div class="overlay-panel overlay-right">
             <h1>没有帐号？</h1>
             <p>立即注册加入我们，和我们一起开始旅程吧</p>
-            <button class="ghost" id="signUp" @click="toSignUp">注册</button>
+            <el-button class="ghost" id="signUp" @click="toSignUp">注册</el-button>
           </div>
         </div>
       </div>
     </div>
-    
   </div>
 </template>  
 
 <script>
 import identify from '@/components/Identify'
+import msgCode from '@/components/MsgCode'
+
 export default {
   name: 'loginIndex',
   data() {
@@ -80,13 +87,14 @@ export default {
       }
     }
     return {
-      sign: false, 
+      sign: false, //切换登录和注册
       identifyCode: '3782', // 验证码
       formSignUp: {
         name: '',
         phone: '',
-        password: '',
-        confirmPwd: ''
+        // password: '',
+        // confirmPwd: ''
+        msgCode: ''
       }, // 注册校验字段
       formSignIn: {
         phone: '',
@@ -101,12 +109,15 @@ export default {
           { required: true, message: '请输入手机号!', trigger: 'blur' },
           { validator: validatePhone, trigger: 'blur' }
         ],
-        password: [
-          { required: true, message: '请输入密码!', trigger: 'blur' }
+        msgCode: [
+          { required: true, message: '请输入短信验证码!', trigger: 'blur' },
         ],
-        confirmPwd: [
-          { required: true, message: '请再次输入密码!', trigger: 'blur' }
-        ]
+        // password: [
+        //   { required: true, message: '请输入密码!', trigger: 'blur' }
+        // ],
+        // confirmPwd: [
+        //   { required: true, message: '请再次输入密码!', trigger: 'blur' }
+        // ]
       }, // 注册校验规则
       ruleSignIn: {
         phone: [
@@ -125,7 +136,7 @@ export default {
   },
   mounted() {
     this.identifyCode = this.makeCode()
-    console.log(this.identifyCode)
+    // console.log(this.identifyCode)
   },
   methods: {
     //切换登录
@@ -154,15 +165,13 @@ export default {
     },
   },
   components: {
-    identify
+    identify,
+    msgCode
   }
 }
 </script>
 
 <style scoped>
-* {
-  box-sizing: border-box;
-}
 .Login {
   width: 100%;
   height: 100vh;
@@ -239,8 +248,8 @@ a {
   background-color: #eee;
 }
 
-button {
-  border-radius: 20px;
+.ghost{
+  border-radius: 5px;
   border: 1px solid#FFF0F5;
   background:#00BFFF;
   color: #fff;
@@ -249,21 +258,30 @@ button {
   padding: 12px 45px;
   letter-spacing: 1px;
   text-transform: uppercase;
-  transition: transform 80ms ease-in;
+  transition: all .2s;
   cursor: pointer;
 }
 
-button:active {
+.ghost:hover{
+  background: #eff;
+  color: #333;
+}
+
+.ghost:active {
   transform: scale(0.95);
 }
 
-button:focus {
+.ghost:focus {
   outline: none;
 }
 
-button.ghost {
+.overlay .ghost {
   background: transparent;
   border-color: #fff;
+}
+.overlay .ghost:hover{
+  transform: scale(1.05);
+  border-color: #333;
 }
 
 .form-container {
