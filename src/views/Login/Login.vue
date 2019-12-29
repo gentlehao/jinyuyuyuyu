@@ -4,7 +4,7 @@
       <div class="form-container sign-up-container">
         <el-form :inline="true" :model="formSignUp" :rules="ruleSignUp" label-width="100px" ref="formSignUp">
           <h1>注册</h1>
-          <span class="mgb-20">您需要使用手机号注册</span>
+          <span class="mgb-20 fc-999">您需要使用手机号注册</span>
           <el-form-item label="昵称:" prop="name">
             <el-input v-model="formSignUp.name" type="text" placeholder="请输入昵称" />
           </el-form-item>
@@ -21,15 +21,15 @@
             <el-input v-model="formSignUp.confirmPwd" type="password" placeholder="请再次输入密码" />
           </el-form-item> -->
           <el-form-item>
-            <msg-code></msg-code>
+            <msg-code :legal="phoneLegal" :phone="formSignUp.phone" @click.native="validateField('formSignUp','phone')"></msg-code>
             <button class="ghost mgl-20" @click="submitForm('formSignUp')">注册</button>
           </el-form-item>
         </el-form>
       </div>
       <div class="form-container sign-in-container">
-        <el-form :model="formSignIn" :rules="ruleSignIn" ref="formSignIn">
+        <el-form :model="formSignIn" :rules="ruleSignIn" ref="formSignIn" v-if="!signInWay">
           <h1>登录</h1>
-          <span>或使用您的密码</span>
+          <span @click="changeSignIn(1)" class="fc-999">或使用短信验证码</span>
           <el-form-item label="手机号：" prop="phone">
             <el-input v-model="formSignIn.phone" type="phone" placeholder="请输入手机号" />
           </el-form-item>
@@ -37,11 +37,30 @@
             <el-input v-model="formSignIn.password" type="password" placeholder="请输入密码" />
           </el-form-item>
           <el-form-item class="identify_out" label="验证码：" prop="identifyCode">
-            <el-input v-model="formSignIn.identifyCode" type="text" placeholder="请输入验证码" />
+            <el-input v-model="formSignIn.identifyCode" type="text" placeholder="请输入验证码(不区分大小写)" />
             <identify :identifyCode="identifyCode" @click.native="refreshCode"></identify>
           </el-form-item>
           <a>忘记密码？</a>
           <button class="ghost" @click="submitForm('formSignIn')">登录</button>
+        </el-form>
+        <el-form :model="formSignIn" :rules="ruleSignIn" ref="formSignIn" v-if="signInWay">
+          <h1>登录</h1>
+          <span @click="changeSignIn(0)" class="fc-999">或使用您的密码</span>
+          <el-form-item label="手机号：" prop="phone">
+            <el-input v-model="formSignIn.phone" type="phone" placeholder="请输入手机号" />
+          </el-form-item>
+          <el-form-item label="短信验证码" prop="msgCode">
+            <el-input v-model="formSignIn.msgCode" type="text" placeholder="请输入短信验证码" />
+          </el-form-item>
+          <el-form-item class="identify_out" label="验证码：" prop="identifyCode">
+            <el-input v-model="formSignIn.identifyCode" type="text" placeholder="请输入验证码(不区分大小写)" />
+            <identify :identifyCode="identifyCode" @click.native="refreshCode"></identify>
+          </el-form-item>
+          <a>忘记密码？</a>
+          <el-form-item>
+            <msg-code :legal="phoneLegal" :phone="formSignIn.phone" @click.native="validateField('formSignIn','phone')"></msg-code>
+            <button class="ghost mgl-20" @click="submitForm('formSignIn')">登录</button>
+          </el-form-item>
         </el-form>
       </div>
       <div class="overlay-container">
@@ -60,7 +79,7 @@
       </div>
     </div>
   </div>
-</template>  
+</template>
 
 <script>
 import identify from '@/components/Identify'
@@ -74,6 +93,9 @@ export default {
       if(!str.test(value)){
         callback(new Error('您输入的手机号不合法!'))
       }
+      else{
+        callback()
+      }
     }
     // let validatePwd = (rule, value, callback) => {
       
@@ -82,13 +104,18 @@ export default {
       
     // }
     let validateIdCode = (rule, value, callback) => {
-      if(value!==this.identifyCode){
+      if(value.toUpperCase()!==this.identifyCode.toUpperCase()){
         callback(new Error('验证码有误!'))
+      }
+      else{
+        callback()
       }
     }
     return {
       sign: false, //切换登录和注册
-      identifyCode: '3782', // 验证码
+      signInWay: 1, //登录方式，1为短信验证码，0为密码
+      phoneLegal: false, //手机号是否合法
+      identifyCode: '3782', // 图形验证码
       formSignUp: {
         name: '',
         phone: '',
@@ -99,7 +126,8 @@ export default {
       formSignIn: {
         phone: '',
         password: '',
-        identifyCode: ''
+        identifyCode: '',
+        msgCode: ''
       }, // 登录校验字段
       ruleSignUp: {
         name: [
@@ -127,6 +155,9 @@ export default {
         password: [
           { required: true, message: '请输入密码!', trigger: 'blur' }
         ],
+        msgCode: [
+          { required: true, message: '请输入短信验证码!', trigger: 'blur' },
+        ],
         identifyCode: [
           { required: true, message: '请输入验证码!', trigger: 'blur' },
           { validator: validateIdCode, trigger: 'blur' }
@@ -143,6 +174,10 @@ export default {
     toSignIn() {
       this.sign = false
     },
+    //切换登录方式
+    changeSignIn(way){
+      this.signInWay = way
+    },
 
     //切换注册
     toSignUp() {
@@ -152,17 +187,32 @@ export default {
     //刷新验证码
     refreshCode() {
       this.identifyCode = this.makeCode()
+      // console.log(this.identifyCode)
     },
+
+    //提交整个表单
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
+          alert('submit!')
         } else {
-          console.log('error submit!!');
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
+    //校验部分字段
+    validateField(formName,prop) {
+      this.$refs[formName].validateField(prop,(error) => {
+        if(!error){
+          switch (prop) {
+            case 'phone': 
+              this.phoneLegal = true
+              break
+          }
+        }
+      })
+    }
   },
   components: {
     identify,
@@ -295,6 +345,11 @@ a {
   left: 0;
   width: 50%;
   z-index: 2;
+}
+
+.sign-in-container span:hover{
+  cursor: pointer;
+  color: #333;
 }
 
 .sign-up-container {

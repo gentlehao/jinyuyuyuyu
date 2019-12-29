@@ -54,7 +54,7 @@
       },
       contentWidth: {
         type: Number,
-        default: 112
+        default: 102
       },
       contentHeight: {
         type: Number,
@@ -141,6 +141,8 @@
   position: absolute;
   right: 1px;
   bottom: -14px;
-  border-radius: 0 5px 5px 0;
+}
+#s-canvas{
+  border-radius: 0 4px 4px 0;
 }
 </style>
