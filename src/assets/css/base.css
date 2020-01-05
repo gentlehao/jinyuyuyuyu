@@ -36,6 +36,9 @@ input select textarea button {
 .fz-20{
     font-size: 20px;
 }
+.fw-blod{
+    font-weight: bold;
+}
 
 /* 字色相关 */
 .fc-black{
@@ -64,23 +67,26 @@ input select textarea button {
 }
 
 /* 行高相关 */
-.lh-12{
+.lh-18{
     line-height: 12px;
 }
-.lh-14{
-    line-height: 14px;
-}
-.lh-16{
-    line-height: 16px;
-}
-.lh-18{
-    line-height: 18px;
+.lh-15{
+    line-height: 15px;
 }
 .lh-20{
     line-height: 20px;
 }
-.lh-22{
-    line-height: 22px;
+.lh-25{
+    line-height: 25px;
+}
+.lh-30{
+    line-height: 30px;
+}
+.lh-35{
+    line-height: 35px;
+}
+.lh-40{
+    line-height: 40px;
 }
 
 /* 外边距相关 */

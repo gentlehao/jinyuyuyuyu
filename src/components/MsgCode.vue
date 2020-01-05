@@ -16,30 +16,34 @@ export default {
     }
   },
   props: {
-    legal:{
+    legal:{ //手机号是否已合法
       type: Boolean,
       default: false
     },
-    phone:{
+    phone: { //手机号
       type: String,
       default: ''
+    },
+    time: { //超时时间
+      type: Number,
+      default: 60
     }
   },
   methods: {
     getCode(){
       if(this.phoneLegal){
-        const TIME_COUNT = 60;
+        const TIME_COUNT = this.time
         if (!this.timer) {
-          this.count = TIME_COUNT;
-          this.msgAbled = true;
+          this.count = TIME_COUNT
+          this.msgAbled = true
           this.timer = setInterval(() => {
             if (this.count > 0 && this.count <= TIME_COUNT) {
-              this.count--;
+              this.count--
             } else {
-              this.text = '获取验证码';
-              this.msgAbled = false;
-              clearInterval(this.timer);
-              this.timer = null;
+              this.text = '获取验证码'
+              this.msgAbled = false
+              clearInterval(this.timer)
+              this.timer = null
             }
           }, 1000)
         }

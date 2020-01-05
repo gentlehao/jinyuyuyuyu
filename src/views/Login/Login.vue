@@ -112,7 +112,7 @@ export default {
       }
     }
     return {
-      sign: false, //切换登录和注册
+      sign: false, //切换登录和注册,false为登录,true为注册
       signInWay: 1, //登录方式，1为短信验证码，0为密码
       phoneLegal: false, //手机号是否合法
       identifyCode: '3782', // 图形验证码
@@ -166,6 +166,7 @@ export default {
     }
   },
   mounted() {
+    this.sign = this.$route.query == 'sgi'?false:true
     this.identifyCode = this.makeCode()
     // console.log(this.identifyCode)
   },
