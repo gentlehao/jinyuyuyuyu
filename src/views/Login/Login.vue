@@ -165,8 +165,10 @@ export default {
       }, // 登录校验规则
     }
   },
-  mounted() {
+  created() {
     this.sign = this.$route.query == 'sgi'?false:true
+  },
+  mounted() {
     this.identifyCode = this.makeCode()
     // console.log(this.identifyCode)
   },

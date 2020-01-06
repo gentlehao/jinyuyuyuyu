@@ -8,7 +8,7 @@
         <span>&nbsp;&nbsp;或&nbsp;&nbsp;<router-link :to="{name:'login',query:'sgu'}">注册</router-link></span>
       </div>
       <div>
-        <span>客服热线:</span><span class="fw-blod fc-read mgr-20">0571-87661392/0571-87661392</span>
+        <span class="mgr-5">客服热线:</span><span class="fw-blod fc-read mgr-20">0571-87661392</span>
         <el-dropdown>
           <span class="el-dropdown-link">
             <i class="el-icon-user"></i>个人中心<i class="el-icon-arrow-down el-icon--right"></i>
@@ -27,7 +27,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'top',
   components: {
@@ -39,7 +38,7 @@ export default {
 
 <style lang="scss" scoped>
 .top {
-  background:#E6E6FA;
+  background:#FFF0F5;
 }
 .top_content {
   min-width: 1024px;
@@ -48,7 +47,6 @@ export default {
   justify-content: space-between;
 }
 a {
-  text-decoration: none;
   color: #409EFF;
 }
 .el-dropdown-link {

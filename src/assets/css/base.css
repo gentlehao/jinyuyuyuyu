@@ -11,8 +11,11 @@ html body {
     padding: 0;
     font-size: 15px;
 }
-ul ol {
+ul, ol, li {
     list-style: none;
+}
+a {
+    text-decoration: none;
 }
 input select textarea button {
     border: none;
@@ -183,94 +186,94 @@ input select textarea button {
 
 /* 内边距相关 */
 .pd-5{
-    margin: 5px;
+    padding: 5px;
 }
 .pd-10{
-    margin: 10px;
+    padding: 10px;
 }
 .pd-15{
-    margin: 15px;
+    padding: 15px;
 }
 .pd-20{
-    margin: 20px;
+    padding: 20px;
 }
 
 .pdtb-5{
-    margin: 5px 0;
+    padding: 5px 0;
 }
 .pdtb-10{
-    margin: 10px 0;
+    padding: 10px 0;
 }
 .pdtb-15{
-    margin: 15px 0;
+    padding: 15px 0;
 }
 .pdtb-20{
-    margin: 20px 0;
+    padding: 20px 0;
 }
 
 .pdlr-5{
-    margin: 0 5px;
+    padding: 0 5px;
 }
 .pdlr-10{
-    margin: 0 10px;
+    padding: 0 10px;
 }
 .pdlr-15{
-    margin: 0 15px;
+    padding: 0 15px;
 }
 .pdlr-20{
-    margin: 0 20px;
+    padding: 0 20px;
 }
 
 .pdt-5{
-    margin-top: 5px;
+    padding-top: 5px;
 }
 .pdt-10{
-    margin-top: 10px;
+    padding-top: 10px;
 }
 .pdt-15{
-    margin-top: 15px;
+    padding-top: 15px;
 }
 .pdt-20{
-    margin-top: 20px;
+    padding-top: 20px;
 }
 
 .pdb-5{
-    margin-bottom: 5px;
+    padding-bottom: 5px;
 }
 .pdb-10{
-    margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 .pdb-15{
-    margin-bottom: 15px;
+    padding-bottom: 15px;
 }
 .pdb-20{
-    margin-bottom: 20px;
+    padding-bottom: 20px;
 }
 
 .pdl-5{
-    margin-left: 5px;
+    padding-left: 5px;
 }
 .pdl-10{
-    margin-left: 10px;
+    padding-left: 10px;
 }
 .pdl-15{
-    margin-left: 15px;
+    padding-left: 15px;
 }
 .pdl-20{
-    margin-left: 20px;
+    padding-left: 20px;
 }
 
 .pdr-5{
-    margin-right: 5px;
+    padding-right: 5px;
 }
 .pdr-10{
-    margin-right: 10px;
+    padding-right: 10px;
 }
 .pdr-15{
-    margin-right: 15px;
+    padding-right: 15px;
 }
 .pdr-20{
-    margin-right: 20px;
+    padding-right: 20px;
 }
 
 /* 位置相关 */
