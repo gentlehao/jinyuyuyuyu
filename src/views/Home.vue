@@ -6,17 +6,62 @@
     <div class="nav">
       <NavMenu activeIndex='1'></NavMenu>
     </div>
-    <div class="content" v-loading="true" element-loading-background="rgba(255, 255, 255, 0.6)">
+    <div class="content" v-loading="false" element-loading-background="rgba(255, 255, 255, 0.6)">
       <el-carousel trigger="click" height="320px">
         <el-carousel-item v-for="banner in 5" :key="banner" :interval="5000">
           <router-link :to="{name:'',query:''}"><el-image class="banner"></el-image></router-link>
         </el-carousel-item>
       </el-carousel>
-      <div class="someNum fz-16">
+      <div class="someNum fz-16 pdtb-20">
         <i class="el-icon-info"></i>
       </div>
-      <div class="recommend">
-        
+      <div class="recommend_goods">
+        <el-row :gutter="20">
+          <el-col :span="18">
+            <i class="el-icon-goods fz-18 fc-666 pdb-20">今日商品推荐</i>
+            <el-card :body-style="{ padding: '0px' }">
+              <el-tabs v-model="activeRType" type="card">
+                <el-tab-pane label="LDPE" name="LDPE">
+                  <el-table
+                    :data="tableData"
+                    stripe
+                    style="width: 100%">
+                    <el-table-column
+                      prop="date"
+                      label="日期"
+                      width="180">
+                    </el-table-column>
+                    <el-table-column
+                      prop="name"
+                      label="姓名"
+                      width="180">
+                    </el-table-column>
+                    <el-table-column
+                      prop="address"
+                      label="地址">
+                    </el-table-column>
+                  </el-table>
+                </el-tab-pane>
+                <el-tab-pane label="HDPE" name="HDPE"></el-tab-pane>
+                <el-tab-pane label="LLDPE" name="LLDPE"></el-tab-pane>
+                <el-tab-pane label="PPHM" name="PPHM"></el-tab-pane>
+              </el-tabs>
+            </el-card>
+          </el-col>
+          <el-col :span="6">
+            <i class="el-icon-medal-1 fz-18 fc-666 pdb-20">热卖商品</i>
+            <el-card :body-style="{ padding: '0px' }">
+              <el-carousel height="200px" direction="vertical" :autoplay="false">
+                <el-carousel-item v-for="item in 3" :key="item">
+                  <router-link :to="{name:'',query:''}"><el-image class="sellwell"></el-image></router-link>
+                </el-carousel-item>
+              </el-carousel>
+            </el-card>
+          </el-col>
+        </el-row>
+      </div>
+      <div class="trend">
+
       </div>
     </div>
     <Footer></Footer>
@@ -35,6 +80,24 @@ export default {
   data() {
     return {
       banners: [], //轮播图
+      activeRType: 'LDPE', //当前推荐商品类型
+      tableData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1517 弄'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1516 弄'
+        }]
     }
   },
   components: {
@@ -49,11 +112,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.nav, .someNum{
+.nav, .someNum, .recommend_goods {
   width: 1024px;
   margin: auto;
 }
-.banner {
+.banner, .sellwell {
   height: 100%;
   width: 100%;
   background: skyblue;
