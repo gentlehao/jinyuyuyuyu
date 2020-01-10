@@ -150,7 +150,7 @@ export default {
 }
 .recommend_goods, .recommend_business {
   width: 1024px;
-  margin: 30px auto 0 auto;
+  margin: 50px auto 0 auto;
 }
 .banner, .sellwell {
   height: 100%;
@@ -172,9 +172,11 @@ export default {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+  border: 1px solid #EBEEF5;
+  padding: 20px;
 }
 .business .el-card{
-  width: 15%;
   margin: 10px;
 }
 .business:hover {
