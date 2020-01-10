@@ -50,7 +50,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .head {
   height: 80px;
   display: flex;

@@ -6,13 +6,13 @@
     <div class="nav">
       <NavMenu activeIndex='1'></NavMenu>
     </div>
+    <el-carousel trigger="click" height="320px">
+      <el-carousel-item v-for="banner in 5" :key="banner" :interval="5000">
+        <router-link :to="{name:'',query:''}"><el-image class="banner"></el-image></router-link>
+      </el-carousel-item>
+    </el-carousel>
     <div class="content" v-loading="false" element-loading-background="rgba(255, 255, 255, 0.6)">
-      <el-carousel trigger="click" height="320px">
-        <el-carousel-item v-for="banner in 5" :key="banner" :interval="5000">
-          <router-link :to="{name:'',query:''}"><el-image class="banner"></el-image></router-link>
-        </el-carousel-item>
-      </el-carousel>
-      <div class="someNum fz-16 pdtb-20">
+      <div class="someNum fz-16 pdt-20 fc-666">
         <i class="el-icon-info"></i>
       </div>
       <div class="recommend_goods">
@@ -25,7 +25,8 @@
                   <el-table
                     :data="tableData"
                     stripe
-                    style="width: 100%">
+                    style="width: 100%"
+                    v-loading="true">
                     <el-table-column
                       prop="date"
                       label="日期"
@@ -45,13 +46,44 @@
                 <el-tab-pane label="HDPE" name="HDPE"></el-tab-pane>
                 <el-tab-pane label="LLDPE" name="LLDPE"></el-tab-pane>
                 <el-tab-pane label="PPHM" name="PPHM"></el-tab-pane>
+                <el-tab-pane label="PPCP" name="PPCP"></el-tab-pane>
+                <el-tab-pane label="PVC" name="PVC"></el-tab-pane>
+                <el-tab-pane label="ABS" name="ABS"></el-tab-pane>
+                <el-tab-pane label="MPE" name="MPE"></el-tab-pane>
+                <el-tab-pane label="更多>>" name="more"></el-tab-pane>
               </el-tabs>
             </el-card>
           </el-col>
           <el-col :span="6">
             <i class="el-icon-medal-1 fz-18 fc-666 pdb-20">热卖商品</i>
             <el-card :body-style="{ padding: '0px' }">
-              <el-carousel height="200px" direction="vertical" :autoplay="false">
+              <el-carousel height="200px" direction="vertical" :interval="5000">
+                <el-carousel-item v-for="item in 3" :key="item">
+                  <router-link :to="{name:'',query:''}"><el-image class="sellwell"></el-image></router-link>
+                </el-carousel-item>
+              </el-carousel>
+            </el-card>
+          </el-col>
+        </el-row>
+      </div>
+      <div class="recommend_business">
+        <el-row :gutter="20">
+          <el-col :span="18">
+            <i class="el-icon-s-cooperation fz-18 fc-666 pdb-20">推荐商家</i>
+            <router-link :to="{name:'',query:''}"><span class="right">成为商家>></span></router-link>
+            <div class="business">
+              <el-card :body-style="{ padding: '0px'}" shadow="hover" v-for="i in 10" :key="i">
+                <el-image></el-image>
+                <div style="padding: 14px;">
+                  <span>好吃的汉堡</span>
+                </div>
+              </el-card>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <i class="el-icon-bell fz-18 fc-666 pdb-20">最新入驻</i>
+            <el-card :body-style="{ padding: '0px' }">
+              <el-carousel height="200px" direction="vertical" :interval="5000">
                 <el-carousel-item v-for="item in 3" :key="item">
                   <router-link :to="{name:'',query:''}"><el-image class="sellwell"></el-image></router-link>
                 </el-carousel-item>
@@ -112,9 +144,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.nav, .someNum, .recommend_goods {
+.nav, .someNum {
   width: 1024px;
   margin: auto;
+}
+.recommend_goods, .recommend_business {
+  width: 1024px;
+  margin: 30px auto 0 auto;
 }
 .banner, .sellwell {
   height: 100%;
@@ -123,5 +159,32 @@ export default {
 }
 .banner:hover {
   cursor: pointer;
+}
+.content {
+  padding: 0 0 50px 0;
+}
+.recommend_goods .el-tabs__header{
+  margin: 0;
+}
+.business {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.business .el-card{
+  width: 15%;
+  margin: 10px;
+}
+.business:hover {
+  cursor: pointer;
+}
+.clearfix:before, .clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
 }
 </style>
