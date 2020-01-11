@@ -5,14 +5,23 @@
         <p class="fz-18 fw-blod">扫一扫，使用xxx网微信小程序</p>
         <el-image></el-image>
       </div>
-      <el-divider direction="vertical"></el-divider>
       <div class="offiacc center">
         <p class="fz-18 fw-blod">扫一扫，关注xxx网微信公众号</p>
         <el-image></el-image>
       </div>
       <el-divider direction="vertical"></el-divider>
+      <div class="usualProb">
+        <p class="fz-18 fw-blod"><i class="el-icon-question mgr-5"></i>常见问题</p>
+        <ul>
+          <li>工作时间：</li>
+          <li>服务热线：</li>
+          <li>电子邮箱：</li>
+          <li></li>
+        </ul>
+      </div>
+      <el-divider direction="vertical"></el-divider>
       <div class="callUs center">
-        <p class="fz-18 fw-blod">联系我们</p>
+        <p class="fz-18 fw-blod"><i class="el-icon-phone-outline mgr-5"></i>联系我们</p>
         <ul>
           <li>工作时间：</li>
           <li>服务热线：</li>

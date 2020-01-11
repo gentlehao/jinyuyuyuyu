@@ -3,7 +3,7 @@
     <div class="head_content auto">
       <el-image></el-image>
       <div class="search">
-        <el-input placeholder="请输入任意原料，膜类，成品，定制进行搜索" v-model="searchContent" class="input-with-select">
+        <el-input placeholder="请输入任意原料，膜类，成品，定制关键字进行搜索" v-model="searchContent" class="input-with-select" clearable>
           <el-select v-model="searchType" slot="prepend">
             <el-option
               v-for="type in Types"
@@ -41,6 +41,10 @@ export default {
         }, {
           value: '4',
           label: '定制'
+        },
+        {
+          value: '5',
+          label: '其他'
         }
       ], //全部搜索类型
     }
@@ -67,7 +71,7 @@ export default {
   justify-content: space-around;
 }
 .search{
-  width: 500px;
+  width: 550px;
 }
 .el-select {
   width: 90px;

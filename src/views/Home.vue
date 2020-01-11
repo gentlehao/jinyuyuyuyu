@@ -11,7 +11,7 @@
         <router-link :to="{name:'',query:''}"><el-image class="banner"></el-image></router-link>
       </el-carousel-item>
     </el-carousel>
-    <div class="content" v-loading="false" element-loading-background="rgba(255, 255, 255, 0.6)">
+    <div class="content" element-loading-background="rgba(255, 255, 255, 0.6)">
       <div class="someNum fz-16 pdt-20 fc-666">
         <i class="el-icon-info"></i>
       </div>
@@ -23,7 +23,7 @@
               <el-tabs v-model="activeRType" type="card">
                 <el-tab-pane label="LDPE" name="LDPE">
                   <el-table
-                    :data="tableData"
+                    :data="recommendData"
                     stripe
                     style="width: 100%"
                     v-loading="true">
@@ -73,10 +73,10 @@
             <router-link :to="{name:'',query:''}"><span class="right">成为商家>></span></router-link>
             <div class="business">
               <el-card :body-style="{ padding: '0px'}" shadow="hover" v-for="i in 10" :key="i">
-                <el-image></el-image>
-                <div style="padding: 14px;">
-                  <span>好吃的汉堡</span>
-                </div>
+                  <el-image></el-image>
+                  <div style="padding: 14px;">
+                    <span>好吃的汉堡</span>
+                  </div>
               </el-card>
             </div>
           </el-col>
@@ -93,7 +93,8 @@
         </el-row>
       </div>
       <div class="trend">
-
+        <div class="fz-18 fc-666 pdb-20"><Icon type="md-analytics"/>价格行情</div>
+        <ve-line :data="priceData"></ve-line>
       </div>
     </div>
     <Footer></Footer>
@@ -113,7 +114,7 @@ export default {
     return {
       banners: [], //轮播图
       activeRType: 'LDPE', //当前推荐商品类型
-      tableData: [{
+      recommendData: [{
           date: '2016-05-02',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄'
@@ -129,7 +130,19 @@ export default {
           date: '2016-05-03',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1516 弄'
-        }]
+        }],
+      priceData: {
+        columns: ['日期', '访问用户', '下单用户', '下单率'],
+        rows: [
+          { '日期': '1/1', '访问用户': 1393, '下单用户': 1093, '下单率': 0.32 },
+          { '日期': '1/2', '访问用户': 3530, '下单用户': 3230, '下单率': 0.26 },
+          { '日期': '1/3', '访问用户': 2923, '下单用户': 2623, '下单率': 0.76 },
+          { '日期': '1/4', '访问用户': 1723, '下单用户': 1423, '下单率': 0.49 },
+          { '日期': '1/5', '访问用户': 3792, '下单用户': 3492, '下单率': 0.323 },
+          { '日期': '1/6', '访问用户': 4593, '下单用户': 4293, '下单率': 0.78 },
+          { '日期': '1/7', '访问用户': 4793, '下单用户': 4793, '下单率': 0.88 }
+        ]
+      }
     }
   },
   components: {
@@ -148,7 +161,7 @@ export default {
   width: 1024px;
   margin: auto;
 }
-.recommend_goods, .recommend_business {
+.recommend_goods, .recommend_business, .trend {
   width: 1024px;
   margin: 50px auto 0 auto;
 }
