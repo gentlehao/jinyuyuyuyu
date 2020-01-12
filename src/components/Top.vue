@@ -4,8 +4,8 @@
       <div>
         <router-link :to="{path:'/'}"><i class="el-icon-s-home">xxx网首页</i></router-link>
         <span class="mgl-20">欢迎来到xxx网，</span>
-        <span>请您&nbsp;&nbsp;<router-link :to="{name:'login',query:'sgi'}">登录</router-link></span>
-        <span>&nbsp;&nbsp;或&nbsp;&nbsp;<router-link :to="{name:'login',query:'sgu'}">注册</router-link></span>
+        <span>请您&nbsp;&nbsp;<router-link :to="{path:'/login'}">登录</router-link></span>
+        <span>&nbsp;&nbsp;或&nbsp;&nbsp;<router-link :to="{path:'/login/signUp'}">注册</router-link></span>
       </div>
       <div>
         <span class="mgr-5">客服热线:</span><span class="fw-blod fc-read mgr-20">0571-87661392</span>

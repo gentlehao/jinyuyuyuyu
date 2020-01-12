@@ -23,6 +23,26 @@ Vue.use(VCharts)
 Vue.use(filters)
 Vue.use(methods)
 
+router.beforeEach((to, from, next) => {
+  //如果登录标志存在且为true，即用户已登录
+  if(localStorage.getItem("isLogin") === "true"){
+    store.state.isLogin = true
+    next()
+  }
+  //如果登录标志不存在，即未登录
+  else{
+    //用户想进入需要登录的页面，则定向回登录界面
+    if(to.meta.needLogin){
+      ViewUI.Message.info('请您先登录')
+      next({path:'/login'})
+    }
+    //用户进入无需登录的界面，则跳转继续
+    else{
+      next()
+    }
+  }
+})
+
 export default new Vue({
   router,
   store,

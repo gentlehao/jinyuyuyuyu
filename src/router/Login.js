@@ -11,6 +11,17 @@ export default [
                 path: "loginIndex",
                 name: "loginIndex",
                 component: () => import('../views/Login/Login.vue'),
+                meta: {
+                    needLogin: false
+                }
+            },
+            {
+                path: "signUp",
+                name: "signUp",
+                component: () => import('../views/Login/SignUp.vue'),
+                meta: {
+                    needLogin: false
+                }
             },
         ]
     },

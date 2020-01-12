@@ -18,7 +18,8 @@
       <div class="recommend_goods">
         <el-row :gutter="20">
           <el-col :span="18">
-            <i class="el-icon-goods fz-18 fc-666 pdb-20">今日商品推荐</i>
+            <i class="el-icon-s-goods fz-18 fc-666 pdb-20">今日商品推荐</i>
+            <router-link :to="{name:'',query:''}"><span class="right">更多>></span></router-link>
             <el-card :body-style="{ padding: '0px' }">
               <el-tabs v-model="activeRType" type="card">
                 <el-tab-pane label="LDPE" name="LDPE">
@@ -50,7 +51,6 @@
                 <el-tab-pane label="PVC" name="PVC"></el-tab-pane>
                 <el-tab-pane label="ABS" name="ABS"></el-tab-pane>
                 <el-tab-pane label="MPE" name="MPE"></el-tab-pane>
-                <el-tab-pane label="更多>>" name="more"></el-tab-pane>
               </el-tabs>
             </el-card>
           </el-col>
@@ -66,35 +66,15 @@
           </el-col>
         </el-row>
       </div>
-      <div class="recommend_business">
-        <el-row :gutter="20">
+      <Business></Business>
+      <div class="trend">
+        <div class="fz-18 fc-666 pdb-20"><Icon type="md-analytics"/>市场行情</div>
+        <el-row>
           <el-col :span="18">
-            <i class="el-icon-s-cooperation fz-18 fc-666 pdb-20">推荐商家</i>
-            <router-link :to="{name:'',query:''}"><span class="right">成为商家>></span></router-link>
-            <div class="business">
-              <el-card :body-style="{ padding: '0px'}" shadow="hover" v-for="i in 10" :key="i">
-                  <el-image></el-image>
-                  <div style="padding: 14px;">
-                    <span>好吃的汉堡</span>
-                  </div>
-              </el-card>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <i class="el-icon-bell fz-18 fc-666 pdb-20">最新入驻</i>
-            <el-card :body-style="{ padding: '0px' }">
-              <el-carousel height="200px" direction="vertical" :interval="5000">
-                <el-carousel-item v-for="item in 3" :key="item">
-                  <router-link :to="{name:'',query:''}"><el-image class="sellwell"></el-image></router-link>
-                </el-carousel-item>
-              </el-carousel>
-            </el-card>
+            <div></div>
+            <ve-line :data="priceData" :settings="chartSettings"></ve-line>
           </el-col>
         </el-row>
-      </div>
-      <div class="trend">
-        <div class="fz-18 fc-666 pdb-20"><Icon type="md-analytics"/>价格行情</div>
-        <ve-line :data="priceData"></ve-line>
       </div>
     </div>
     <Footer></Footer>
@@ -106,11 +86,17 @@ import backToTop from '@/components/BackToTop'
 import Top from '@/components/Top'
 import Header from '@/components/Header'
 import NavMenu from '@/components/NavMenu'
+import Business from '@/components/Business'
 import Footer from '@/components/Footer'
 
 export default {
   name: 'home',
   data() {
+    this.chartSettings = {
+      axisSite: { right: ['成交量'] },
+      yAxisType: ['MB', 'KMB'],
+      yAxisName: ['价格', '成交量']
+    }
     return {
       banners: [], //轮播图
       activeRType: 'LDPE', //当前推荐商品类型
@@ -132,15 +118,15 @@ export default {
           address: '上海市普陀区金沙江路 1516 弄'
         }],
       priceData: {
-        columns: ['日期', '访问用户', '下单用户', '下单率'],
+        columns: ['日期', '价格', '成交量'],
         rows: [
-          { '日期': '1/1', '访问用户': 1393, '下单用户': 1093, '下单率': 0.32 },
-          { '日期': '1/2', '访问用户': 3530, '下单用户': 3230, '下单率': 0.26 },
-          { '日期': '1/3', '访问用户': 2923, '下单用户': 2623, '下单率': 0.76 },
-          { '日期': '1/4', '访问用户': 1723, '下单用户': 1423, '下单率': 0.49 },
-          { '日期': '1/5', '访问用户': 3792, '下单用户': 3492, '下单率': 0.323 },
-          { '日期': '1/6', '访问用户': 4593, '下单用户': 4293, '下单率': 0.78 },
-          { '日期': '1/7', '访问用户': 4793, '下单用户': 4793, '下单率': 0.88 }
+          { '日期': '1/1', '价格': 1393, '成交量': 1093 },
+          { '日期': '1/2', '价格': 3530, '成交量': 3230 },
+          { '日期': '1/3', '价格': 2923, '成交量': 2623 },
+          { '日期': '1/4', '价格': 1723, '成交量': 1423 },
+          { '日期': '1/5', '价格': 3792, '成交量': 3492 },
+          { '日期': '1/6', '价格': 4593, '成交量': 4293 },
+          { '日期': '1/7', '价格': 4793, '成交量': 4793 }
         ]
       }
     }
@@ -150,7 +136,8 @@ export default {
     Top,
     Header,
     Footer,
-    NavMenu
+    NavMenu,
+    Business
   },
   methods: {}
 }
@@ -161,14 +148,13 @@ export default {
   width: 1024px;
   margin: auto;
 }
-.recommend_goods, .recommend_business, .trend {
+.recommend_goods, .trend {
   width: 1024px;
   margin: 50px auto 0 auto;
 }
 .banner, .sellwell {
   height: 100%;
   width: 100%;
-  background: skyblue;
 }
 .banner:hover {
   cursor: pointer;
@@ -178,28 +164,5 @@ export default {
 }
 .recommend_goods .el-tabs__header{
   margin: 0;
-}
-.business {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-  border: 1px solid #EBEEF5;
-  padding: 20px;
-}
-.business .el-card{
-  margin: 10px;
-}
-.business:hover {
-  cursor: pointer;
-}
-.clearfix:before, .clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  clear: both;
 }
 </style>

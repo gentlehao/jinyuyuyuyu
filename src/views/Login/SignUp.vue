@@ -20,9 +20,9 @@
           <el-form-item label="确认密码:" prop="confirmPwd">
             <el-input v-model="formSignUp.confirmPwd" type="password" placeholder="请再次输入密码" />
           </el-form-item> -->
-          <el-form-item class="mgt-20">
+          <el-form-item>
             <msg-code :legal="phoneLegal" :phone="formSignUp.phone" @click.native="validateField('formSignUp','phone')"></msg-code>
-            <el-button class="mgl-20" @click="submitForm('formSignUp')" type="primary">注册</el-button>
+            <button class="ghost mgl-20" @click="submitForm('formSignUp')">注册</button>
           </el-form-item>
         </el-form>
       </div>
@@ -59,7 +59,7 @@
           <a>忘记密码？</a>
           <el-form-item>
             <msg-code :legal="phoneLegal" :phone="formSignIn.phone" @click.native="validateField('formSignIn','phone')"></msg-code>
-            <el-button class="mgl-20" @click="submitForm('formSignIn')" type="primary">登录</el-button>
+            <button class="ghost mgl-20" @click="submitForm('formSignIn')">登录</button>
           </el-form-item>
         </el-form>
       </div>
@@ -112,7 +112,7 @@ export default {
       }
     }
     return {
-      sign: false, //切换登录和注册,false为登录,true为注册
+      sign: true, //切换登录和注册,false为登录,true为注册
       signInWay: 1, //登录方式，1为短信验证码，0为密码
       phoneLegal: false, //手机号是否合法
       identifyCode: '3782', // 图形验证码
@@ -166,7 +166,7 @@ export default {
     }
   },
   created() {
-
+    
   },
   mounted() {
     this.identifyCode = this.makeCode()
@@ -200,7 +200,7 @@ export default {
           if(formName=='formSignIn'){
             this.$store.dispatch("userLogin", true)
             localStorage.setItem("isLogin", "true")
-            this.$router.push('/')
+            // this.$router.push('/')
           }
         } else {
           console.log('error submit!!')
