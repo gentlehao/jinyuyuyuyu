@@ -8,7 +8,7 @@
             <el-card :body-style="{ padding: '0px'}" shadow="hover" v-for="i in 10" :key="i">
                 <el-image></el-image>
                 <div style="padding: 14px;">
-                  <span>好吃的汉堡</span>
+                  <span>商家{{i}}</span>
                 </div>
             </el-card>
           </div>
@@ -49,6 +49,7 @@ export default {
 }
 .business .el-card{
   margin: 10px;
+  width: 15%;
 }
 .business .el-card:hover {
   cursor: pointer;

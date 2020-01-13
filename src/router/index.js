@@ -3,12 +3,14 @@ import VueRouter from 'vue-router'
 
 import Home from './Home'
 import Login from './Login'
+import MatchingGoods from './MatchingGoods'
 
 Vue.use(VueRouter)
 
 const routes = new Set([
   ...Home,
-  ...Login
+  ...Login,
+  ...MatchingGoods
 ])
 
 const router = new VueRouter({

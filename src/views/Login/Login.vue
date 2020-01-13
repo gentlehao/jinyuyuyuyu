@@ -1,8 +1,14 @@
 <template>
-  <div class="Login">
+  <div class="login">
     <div :class="sign?'dowebok right-panel-active':'dowebok'" id="dowebok">
       <div class="form-container sign-up-container">
-        <el-form :inline="true" :model="formSignUp" :rules="ruleSignUp" label-width="100px" ref="formSignUp">
+        <el-form
+          :inline="true"
+          :model="formSignUp"
+          :rules="ruleSignUp"
+          label-width="100px"
+          ref="formSignUp"
+        >
           <h1>注册</h1>
           <span class="mgb-20 fc-999">您需要使用手机号注册</span>
           <el-form-item label="昵称:" prop="name">
@@ -19,9 +25,13 @@
           </el-form-item>
           <el-form-item label="确认密码:" prop="confirmPwd">
             <el-input v-model="formSignUp.confirmPwd" type="password" placeholder="请再次输入密码" />
-          </el-form-item> -->
+          </el-form-item>-->
           <el-form-item class="mgt-20">
-            <msg-code :legal="phoneLegal" :phone="formSignUp.phone" @click.native="validateField('formSignUp','phone')"></msg-code>
+            <msg-code
+              :legal="phoneLegal"
+              :phone="formSignUp.phone"
+              @click.native="validateField('formSignUp','phone')"
+            ></msg-code>
             <el-button class="mgl-20" @click="submitForm('formSignUp')" type="primary">注册</el-button>
           </el-form-item>
         </el-form>
@@ -41,7 +51,7 @@
             <identify :identifyCode="identifyCode" @click.native="refreshCode"></identify>
           </el-form-item>
           <a>忘记密码？</a>
-          <button class="ghost" @click="submitForm('formSignIn')">登录</button>
+          <el-button class="mgl-20" @click="submitForm('formSignIn')" type="primary">登录</el-button>
         </el-form>
         <el-form :model="formSignIn" :rules="ruleSignIn" ref="formSignIn" v-if="signInWay">
           <h1>登录</h1>
@@ -58,7 +68,11 @@
           </el-form-item>
           <a>忘记密码？</a>
           <el-form-item>
-            <msg-code :legal="phoneLegal" :phone="formSignIn.phone" @click.native="validateField('formSignIn','phone')"></msg-code>
+            <msg-code
+              :legal="phoneLegal"
+              :phone="formSignIn.phone"
+              @click.native="validateField('formSignIn','phone')"
+            ></msg-code>
             <el-button class="mgl-20" @click="submitForm('formSignIn')" type="primary">登录</el-button>
           </el-form-item>
         </el-form>
@@ -90,24 +104,22 @@ export default {
   data() {
     let validatePhone = (rule, value, callback) => {
       let str = /^1[3|4|5|7|8][0-9]{9}$/
-      if(!str.test(value)){
+      if (!str.test(value)) {
         callback(new Error('您输入的手机号不合法!'))
-      }
-      else{
+      } else {
         callback()
       }
     }
     // let validatePwd = (rule, value, callback) => {
-      
+
     // }
     // let validateConfPwd = (rule, value, callback) => {
-      
+
     // }
     let validateIdCode = (rule, value, callback) => {
-      if(value.toUpperCase()!==this.identifyCode.toUpperCase()){
+      if (value.toUpperCase() !== this.identifyCode.toUpperCase()) {
         callback(new Error('验证码有误!'))
-      }
-      else{
+      } else {
         callback()
       }
     }
@@ -138,8 +150,8 @@ export default {
           { validator: validatePhone, trigger: 'blur' }
         ],
         msgCode: [
-          { required: true, message: '请输入短信验证码!', trigger: 'blur' },
-        ],
+          { required: true, message: '请输入短信验证码!', trigger: 'blur' }
+        ]
         // password: [
         //   { required: true, message: '请输入密码!', trigger: 'blur' }
         // ],
@@ -152,22 +164,18 @@ export default {
           { required: true, message: '请输入手机号!', trigger: 'blur' },
           { validator: validatePhone, trigger: 'blur' }
         ],
-        password: [
-          { required: true, message: '请输入密码!', trigger: 'blur' }
-        ],
+        password: [{ required: true, message: '请输入密码!', trigger: 'blur' }],
         msgCode: [
-          { required: true, message: '请输入短信验证码!', trigger: 'blur' },
+          { required: true, message: '请输入短信验证码!', trigger: 'blur' }
         ],
         identifyCode: [
           { required: true, message: '请输入验证码!', trigger: 'blur' },
           { validator: validateIdCode, trigger: 'blur' }
         ]
-      }, // 登录校验规则
+      } // 登录校验规则
     }
   },
-  created() {
-
-  },
+  created() {},
   mounted() {
     this.identifyCode = this.makeCode()
     // console.log(this.identifyCode)
@@ -178,7 +186,7 @@ export default {
       this.sign = false
     },
     //切换登录方式
-    changeSignIn(way){
+    changeSignIn(way) {
       this.signInWay = way
     },
 
@@ -186,7 +194,7 @@ export default {
     toSignUp() {
       this.sign = true
     },
-    
+
     //刷新验证码
     refreshCode() {
       this.identifyCode = this.makeCode()
@@ -195,11 +203,11 @@ export default {
 
     //提交整个表单
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
-          if(formName=='formSignIn'){
-            this.$store.dispatch("userLogin", true)
-            localStorage.setItem("isLogin", "true")
+          if (formName == 'formSignIn') {
+            this.$store.dispatch('userLogin', true)
+            localStorage.setItem('isLogin', 'true')
             this.$router.push('/')
           }
         } else {
@@ -209,11 +217,11 @@ export default {
       })
     },
     //校验部分字段
-    validateField(formName,prop) {
-      this.$refs[formName].validateField(prop,(error) => {
-        if(!error){
+    validateField(formName, prop) {
+      this.$refs[formName].validateField(prop, error => {
+        if (!error) {
           switch (prop) {
-            case 'phone': 
+            case 'phone':
               this.phoneLegal = true
               break
           }
@@ -229,7 +237,7 @@ export default {
 </script>
 
 <style scoped>
-.Login {
+.login {
   width: 100%;
   height: 100vh;
   background: #ededed;
@@ -271,7 +279,7 @@ a {
   margin: 0px auto;
 }
 
-.form-container form{
+.form-container form {
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -281,7 +289,8 @@ a {
   text-align: center;
 }
 
-.sign-in-container .el-form-item__content ,.sign-in-container .el-form-item {
+.sign-in-container .el-form-item__content,
+.sign-in-container .el-form-item {
   margin-bottom: 10px;
   width: 80%;
 }
@@ -305,21 +314,21 @@ a {
   background-color: #eee;
 }
 
-.ghost{
+.ghost {
   border-radius: 5px;
   border: 1px solid#FFF0F5;
-  background:#00BFFF;
+  background: #00bfff;
   color: #fff;
   font-size: 12px;
   font-weight: bold;
   padding: 12px 45px;
   letter-spacing: 1px;
   text-transform: uppercase;
-  transition: all .2s;
+  transition: all 0.2s;
   cursor: pointer;
 }
 
-.ghost:hover{
+.ghost:hover {
   background: #eff;
   color: #333;
 }
@@ -336,7 +345,7 @@ a {
   background: transparent;
   border-color: #fff;
 }
-.overlay .ghost:hover{
+.overlay .ghost:hover {
   transform: scale(1.05);
   border-color: #333;
 }
@@ -354,7 +363,7 @@ a {
   z-index: 2;
 }
 
-.sign-in-container span:hover{
+.sign-in-container span:hover {
   cursor: pointer;
   color: #333;
 }
@@ -366,7 +375,7 @@ a {
   opacity: 0;
 }
 
-.identify_out{
+.identify_out {
   position: relative;
 }
 
@@ -382,8 +391,8 @@ a {
 }
 
 .overlay {
-  background:#00BFFF;
-  background: linear-gradient(to right, #00BFFF,#4169E1) no-repeat 0 0 / cover;
+  background: #00bfff;
+  background: linear-gradient(to right, #00bfff, #4169e1) no-repeat 0 0 / cover;
   color: #fff;
   position: relative;
   left: -100%;
