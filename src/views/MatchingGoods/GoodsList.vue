@@ -8,11 +8,17 @@
     </div>
     <div class="content">
       <div class="filter">
-        <List header="Header" footer="Footer" border size="large">
-          <ListItem>This is a piece of text.</ListItem>
-          <ListItem>This is a piece of text.</ListItem>
-          <ListItem>This is a piece of text.</ListItem>
+        <List item-layout="vertical" v-for="i in 4" :key="i">
+          <ListItem>
+            <ListItemMeta/>
+            <template slot="action">
+              
+            </template>
+          </ListItem>
         </List>
+      </div>
+      <div class="page">
+        <Page :total="100" show-elevator class="pages" />
       </div>
     </div>
     <Footer></Footer>
@@ -30,14 +36,11 @@ export default {
   name: 'goodsList',
   data() {
     return {
-      // activeIndex: '1' //导航菜单当前状态
+      activeIndex: this.$store.state.navIndex //导航菜单当前状态
     }
   },
-  props: {
-    activeIndex: {
-      type: String,
-      default: '1'
-    }
+  created() {
+    
   },
   components: {
     backToTop,
@@ -53,8 +56,11 @@ export default {
 .nav {
   border-bottom: solid 1px #e6e6e6;
 }
-.filter {
+.filter, .page{
   width: 1024px;
   margin: auto;
+}
+.pages {
+  display: inline-block;
 }
 </style>

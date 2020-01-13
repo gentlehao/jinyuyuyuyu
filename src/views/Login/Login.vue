@@ -1,5 +1,8 @@
 <template>
   <div class="login">
+    <back-to-top></back-to-top>
+    <Top></Top>
+    <Header :class="'shadow'"></Header>
     <div :class="sign?'dowebok right-panel-active':'dowebok'" id="dowebok">
       <div class="form-container sign-up-container">
         <el-form
@@ -92,12 +95,17 @@
         </div>
       </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import identify from '@/components/Identify'
 import msgCode from '@/components/MsgCode'
+import backToTop from '@/components/BackToTop'
+import Top from '@/components/Top'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 
 export default {
   name: 'loginIndex',
@@ -231,7 +239,11 @@ export default {
   },
   components: {
     identify,
-    msgCode
+    msgCode,
+    backToTop,
+    Top,
+    Header,
+    Footer
   }
 }
 </script>
@@ -240,8 +252,7 @@ export default {
 .login {
   width: 100%;
   height: 100vh;
-  background: #ededed;
-  padding-top: 100px;
+  background: url('../../assets/img/LoginBack.jpg');
 }
 
 h1 {
@@ -276,7 +287,7 @@ a {
   width: 768px;
   max-width: 100%;
   min-height: 480px;
-  margin: 0px auto;
+  margin: 100px auto 150px auto;
 }
 
 .form-container form {

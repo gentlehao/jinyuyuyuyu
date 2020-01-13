@@ -5,7 +5,7 @@
         <router-link :to="{path:'/'}">首页</router-link>
       </el-menu-item>
       <el-menu-item index="2">
-        <router-link :to="{path:'/'}">自营市场</router-link>
+        <router-link :to="{path:'/matchingGoods/goodsList'}">自营市场</router-link>
       </el-menu-item>
       <el-menu-item index="3">
         <router-link :to="{path:'/'}">供应商供应</router-link>

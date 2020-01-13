@@ -91,7 +91,7 @@ export default {
       yAxisName: ['价格', '成交量']
     }
     return {
-      activeIndex: '1', //导航菜单当前状态
+      activeIndex: this.$store.state.navIndex, //导航菜单当前状态
       banners: [], //轮播图
       activeRType: 'LDPE', //当前推荐商品类型
       recommendData: [

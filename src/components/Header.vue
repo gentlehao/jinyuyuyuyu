@@ -60,6 +60,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #fff;
 }
 .shadow {
   box-shadow: 0px 10px 10px -10px#D8BFD8;

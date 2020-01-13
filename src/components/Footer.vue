@@ -41,7 +41,7 @@ export default {
 
 <style lang="scss">
 .footer{
-  background:#87CEFA;
+  background:#2489EB;
 }
 .footer_content{
   width: 1024px;
