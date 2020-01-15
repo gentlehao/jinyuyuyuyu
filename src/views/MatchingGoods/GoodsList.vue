@@ -36,11 +36,11 @@ export default {
   name: 'goodsList',
   data() {
     return {
-      activeIndex: this.$store.state.navIndex //导航菜单当前状态
+      activeIndex: '2' //导航菜单当前状态
     }
   },
   created() {
-    
+    this.activeIndex = this.$route.query.activeIndex
   },
   components: {
     backToTop,
