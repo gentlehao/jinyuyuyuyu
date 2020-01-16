@@ -3,7 +3,7 @@
     <div class="head_content auto">
       <el-image></el-image>
       <div class="search">
-        <el-input placeholder="请输入任意原料，膜类，成品，定制关键字进行搜索" v-model="searchContent" class="input-with-select" clearable>
+        <el-input placeholder="请输入任意原料，膜类，成品，定制关键字进行搜索" v-model="searchContent" class="input-with-select" @keyup.native.enter="Search" clearable>
           <el-select v-model="searchType" slot="prepend">
             <el-option
               v-for="type in Types"
@@ -50,6 +50,9 @@ export default {
     }
   },
   methods: {
+    Search() {
+      
+    }
   }
 }
 </script>

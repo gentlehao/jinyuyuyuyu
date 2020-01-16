@@ -8,17 +8,30 @@
     </div>
     <div class="content">
       <div class="filter">
-        <List item-layout="vertical" v-for="i in 4" :key="i">
-          <ListItem>
-            <ListItemMeta/>
-            <template slot="action">
-              
-            </template>
-          </ListItem>
+        <List border>
+            <ListItem>
+              <span>厂家：</span>
+              <div class="_factor"></div>
+            </ListItem>
+            <ListItem>
+              <span>种类：</span>
+              <div class="_class"><Tag type="border" class="mgl-10" v-for="i in 6" :key="i">成品</Tag></div>
+            </ListItem>
+            <ListItem>
+              <span>材料：</span>
+              <div class="_material"><Tag type="border" class="mgl-10" v-for="i in 6" :key="i">PVC</Tag></div>
+            </ListItem>
         </List>
       </div>
+      <div class="goods">
+        <el-tabs v-model="activeRType" type="border-card">
+          <el-tab-pane v-for="(item,index) in sortList" :key="item.name" :label="item.label" :name="item.name" @tab-click="Sort(index)">
+            <div>{{goodsList}}</div>
+          </el-tab-pane>
+        </el-tabs>
+      </div>
       <div class="page">
-        <Page :total="100" show-elevator class="pages" />
+        <Page :total="goodsList.length" show-elevator class="pages" />
       </div>
     </div>
     <Footer></Footer>
@@ -36,7 +49,27 @@ export default {
   name: 'goodsList',
   data() {
     return {
-      activeIndex: '2' //导航菜单当前状态
+      activeIndex: '2', //导航菜单当前状态
+      // tableData: [], //利用空表格的排序
+      sortList: [
+        {
+          label: '综合', //排序名
+          name: 'comprehensive', //排序标签名
+          rules: '00', //排序规则码
+        },
+        {
+          label: '价格', //排序名
+          name: 'price', //排序标签名
+          rules: '10', //排序规则码
+        },
+        {
+          label: '销量', //排序名
+          name: 'volume', //排序标签名
+          rules: '20', //排序规则码
+        }
+      ],
+      activeRType: 'comprehensive', //默认排序
+      goodsList: [], //查回的商品
     }
   },
   created() {
@@ -48,6 +81,14 @@ export default {
     Header,
     NavMenu,
     Footer
+  },
+  methods: {
+    Sort(index) {
+      if(!index){
+        this.sortList[index].rules = this.sortList[index].rules.slice(1,2) == '0'?(index+'1'):(index+'0')
+        this.$set(this.sortList[index], 'label', this.sortList[index].rules.slice(1,2) == '0'?this.sortList[index].label+'由高到低':this.sortList[index].label+'由低到高')
+      }
+    }
   }
 }
 </script>
@@ -56,9 +97,9 @@ export default {
 .nav {
   border-bottom: solid 1px #e6e6e6;
 }
-.filter, .page{
+.filter, .page, .goods{
   width: 1024px;
-  margin: auto;
+    margin: 30px auto 0 auto;
 }
 .pages {
   display: inline-block;

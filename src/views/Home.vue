@@ -24,24 +24,22 @@
             <router-link :to="{name:'',query:''}">
               <span class="right">更多>></span>
             </router-link>
-            <el-card :body-style="{ padding: '0px' }">
-              <el-tabs v-model="activeRType" type="card">
-                <el-tab-pane label="LDPE" name="LDPE">
-                  <el-table :data="recommendData" stripe style="width: 100%" v-loading="true">
-                    <el-table-column prop="date" label="日期" width="180"></el-table-column>
-                    <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-                    <el-table-column prop="address" label="地址"></el-table-column>
-                  </el-table>
-                </el-tab-pane>
-                <el-tab-pane label="HDPE" name="HDPE"></el-tab-pane>
-                <el-tab-pane label="LLDPE" name="LLDPE"></el-tab-pane>
-                <el-tab-pane label="PPHM" name="PPHM"></el-tab-pane>
-                <el-tab-pane label="PPCP" name="PPCP"></el-tab-pane>
-                <el-tab-pane label="PVC" name="PVC"></el-tab-pane>
-                <el-tab-pane label="ABS" name="ABS"></el-tab-pane>
-                <el-tab-pane label="MPE" name="MPE"></el-tab-pane>
-              </el-tabs>
-            </el-card>
+            <el-tabs v-model="activeRType" type="border-card">
+              <el-tab-pane label="LDPE" name="LDPE">
+                <el-table :data="recommendData" stripe style="width: 100%" v-loading="true">
+                  <el-table-column prop="date" label="日期" width="180"></el-table-column>
+                  <el-table-column prop="name" label="姓名" width="180"></el-table-column>
+                  <el-table-column prop="address" label="地址"></el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="HDPE" name="HDPE"></el-tab-pane>
+              <el-tab-pane label="LLDPE" name="LLDPE"></el-tab-pane>
+              <el-tab-pane label="PPHM" name="PPHM"></el-tab-pane>
+              <el-tab-pane label="PPCP" name="PPCP"></el-tab-pane>
+              <el-tab-pane label="PVC" name="PVC"></el-tab-pane>
+              <el-tab-pane label="ABS" name="ABS"></el-tab-pane>
+              <el-tab-pane label="MPE" name="MPE"></el-tab-pane>
+            </el-tabs>
           </el-col>
           <el-col :span="6">
             <i class="el-icon-medal-1 fz-18 fc-666 pdb-20">热卖商品</i>
