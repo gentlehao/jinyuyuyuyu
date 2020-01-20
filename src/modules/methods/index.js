@@ -19,6 +19,33 @@ const goTo = (_blank,path,data)=>{
     }
 }
 
+//发送请求
+const api = (url,data,vueExam,method='POST')=> {
+    switch(method) {
+        case 'GET':
+            vueExam.axios({
+                url: url,
+                method: method,
+                params: data
+            }).then(res=> {
+                return new Promise((resolve)=> {})
+            }).catch(e=> {
+                return new Promise((resolve)=> {})
+            })
+            break
+        case 'POST': default:
+            vueExam.axios({
+                url: url,
+                method: method,
+                data: data
+            }).then(res=> {
+                return new Promise((resolve)=> {})
+            }).catch(e=> {
+                return new Promise((resolve)=> {})
+            })
+    }
+}
+
 //图形验证码生成
 const makeCode = ()=> {
     return Math.random().toString(36).substring(3,7)

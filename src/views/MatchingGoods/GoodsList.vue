@@ -24,8 +24,8 @@
         </List>
       </div>
       <div class="goods">
-        <el-tabs v-model="activeRType" type="border-card">
-          <el-tab-pane v-for="(item,index) in sortList" :key="item.name" :label="item.label" :name="item.name" @tab-click="Sort(index)">
+        <el-tabs v-model="activeRType" type="border-card" @tab-click="Sort">
+          <el-tab-pane v-for="item in sortList" :key="item.name" :label="item.label" :name="item.name">
             <div>{{goodsList}}</div>
           </el-tab-pane>
         </el-tabs>
@@ -68,6 +68,23 @@ export default {
           rules: '20', //排序规则码
         }
       ],
+      sortBackups: [
+        {
+          label: '综合', //排序名
+          name: 'comprehensive', //排序标签名
+          rules: '00', //排序规则码
+        },
+        {
+          label: '价格', //排序名
+          name: 'price', //排序标签名
+          rules: '10', //排序规则码
+        },
+        {
+          label: '销量', //排序名
+          name: 'volume', //排序标签名
+          rules: '20', //排序规则码
+        }
+      ],//备用排序列表
       activeRType: 'comprehensive', //默认排序
       goodsList: [], //查回的商品
     }
@@ -83,13 +100,23 @@ export default {
     Footer
   },
   methods: {
-    Sort(index) {
-      if(!index){
+    Sort(tab) {
+      let index = Number(tab.index)
+      if(index){
         this.sortList[index].rules = this.sortList[index].rules.slice(1,2) == '0'?(index+'1'):(index+'0')
-        this.$set(this.sortList[index], 'label', this.sortList[index].rules.slice(1,2) == '0'?this.sortList[index].label+'由高到低':this.sortList[index].label+'由低到高')
+        switch(index) {
+          case 1:
+            this.$set(this.sortList[index], 'label', this.sortList[index].rules.slice(1,2) == '0'?'价格由高到低':'价格由低到高')
+            break
+          case 2:
+            this.$set(this.sortList[index], 'label', this.sortList[index].rules.slice(1,2) == '0'?'销量由高到低':'销量由低到高')
+            break
+          default:
+            return
+        }
       }
     }
-  }
+  },
 }
 </script>
 
