@@ -1,5 +1,4 @@
 import Vue from '@/main'
-import qs from 'qs'
 
 import api from './api';
 
