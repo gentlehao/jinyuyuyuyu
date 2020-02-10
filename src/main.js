@@ -3,7 +3,6 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
-import VueAxios from 'vue-axios'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -18,7 +17,7 @@ import '@/assets/css/base.css'
 
 Vue.config.productionTip = false
 
-Vue.use(VueAxios,axios)
+Vue.use(axios)
 
 Vue.use(ElementUI)
 Vue.use(ViewUI)
@@ -38,7 +37,7 @@ router.beforeEach((to, from, next) => {
     //用户想进入需要登录的页面，则定向回登录界面
     if(to.meta.needLogin){
       ViewUI.Message.info('请您先登录')
-      next({path:'/login'})
+      next({path:'/login', query: {redirect: to.fullPath}})
     }
     //用户进入无需登录的界面，则跳转继续
     else{

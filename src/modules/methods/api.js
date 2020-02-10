@@ -1,9 +1,12 @@
-import Vue from '@/main'
+import Vue from 'vue'
+import axios from 'axios'
 import qs from 'qs'
+import store from '@/store'
+import ViewUI from 'view-design'
 
 const config = {
     // 基础url前缀
-    baseURL: 'baseUrl',
+    baseURL: '/api',
     // 请求头信息
     headers: {
         'Content-Type': 'application/json;charset=UTF-8',
@@ -17,12 +20,13 @@ const config = {
     // 返回数据类型
     responseType: 'json',
 }
+
 let cancel, promiseArr = {}
-const CancelToken = Vue.axios.CancelToken
+const CancelToken = axios.CancelToken
 //配置全局取消数组
 window._axiosPromiseArr = []
 
-const instance = Vue.axios.create(config)
+const instance = axios.create(config)
 
 // request 拦截器
 instance.interceptors.request.use(
@@ -34,9 +38,9 @@ instance.interceptors.request.use(
         } else {
             promiseArr[request.url] = cancel
         }
-        Vue.$Loading.start()
+        ViewUI.LoadingBar.start()
         //权限验证
-        const token = localStorage.getItem('token') || Vue.$store.state.token
+        const token = localStorage.getItem('token') || store.state.token
         if (token) {
             config.headers.Token = token
         }
@@ -49,7 +53,7 @@ instance.interceptors.request.use(
         return request
     },
     error => {
-        Vue.$Loading.error()
+        ViewUI.LoadingBar.error()
         //判断请求超时
         if (error.code === 'ECONNABORTED' && error.message.indexOf('timeout') !== -1) {
             Vue.$router.push({ path: '' })
@@ -68,12 +72,7 @@ instance.interceptors.response.use(
         } else {
             data = response.data
         }
-        switch (data.code) {
-            case '501':
-                break
-            default:
-        }
-        Vue.$Loading.finish()
+        ViewUI.LoadingBar.finish()
         return data
     },
     error => {
@@ -114,12 +113,14 @@ instance.interceptors.response.use(
                     break
                 default:
             }
+            ViewUI.LoadingBar.error()
+            ViewUI.Message.error(error.message)
         }
         return Promise.reject(error)
     }
 )
 
-export default (url = '', data = {}, method = 'GET') => {
+export default (url = '', method = 'GET', data = {}) => {
     let options = {
         url,
         cancelToken: new CancelToken(c => {
@@ -138,6 +139,21 @@ export default (url = '', data = {}, method = 'GET') => {
         } else if (method === 'POST') {
             options = Object.assign(options, {
                 method: 'post',
+                data,
+            })
+        } else if (method === 'PATCH') {
+            options = Object.assign(options, {
+                method: 'patch',
+                data,
+            })
+        } else if (method === 'PUT') {
+            options = Object.assign(options, {
+                method: 'put',
+                data,
+            })
+        } else if (method === 'DEL') {
+            options = Object.assign(options, {
+                method: 'del',
                 data,
             })
         }

@@ -216,7 +216,10 @@ export default {
           if (formName == 'formSignIn') {
             this.$store.dispatch('userLogin', true)
             localStorage.setItem('isLogin', 'true')
-            this.$router.push('/')
+            this.api('123.do', 'post').then((res,err)=>{
+              // console.log(err)
+              this.goTo.path(this.$route.query.redirect,{})
+            })
           }
         } else {
           console.log('error submit!!')
