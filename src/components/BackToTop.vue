@@ -2,7 +2,7 @@
   <transition name='slide-fade'>
     <div class='page-component-up' :style="{'opacity':isShow}" @click='getTop'>
       <i class="el-icon-caret-top"></i>
-      <div>TOP</div>
+      <div style="color: #333">TOP</div>
     </div>
   </transition>
 </template>

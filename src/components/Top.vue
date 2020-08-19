@@ -8,17 +8,17 @@
         <span>&nbsp;&nbsp;或&nbsp;&nbsp;<router-link :to="{path:'/login/signUp'}">注册</router-link></span>
       </div>
       <div>
-        <span class="mgr-5">客服热线:</span><span class="fw-blod fc-read mgr-20">0571-87661392</span>
+        <span class="mgr-5">客服热线:</span><span class="fw-blod fc-red mgr-20">0571-87661392</span>
         <el-dropdown>
           <span class="el-dropdown-link">
-            <i class="el-icon-user"></i>个人中心<i class="el-icon-arrow-down el-icon--right"></i>
+            <router-link :to="{path:'/userCenter'}"><i class="el-icon-user"></i>个人中心<i class="el-icon-arrow-down el-icon--right"></i></router-link>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>个人信息</el-dropdown-item>
-            <el-dropdown-item>地址管理</el-dropdown-item>
-            <el-dropdown-item divided>我的商品</el-dropdown-item>
-            <el-dropdown-item>我的审批</el-dropdown-item>
-            <el-dropdown-item>我的订单</el-dropdown-item>
+            <router-link :to="{path:'/userCenter'}"><el-dropdown-item>个人信息</el-dropdown-item></router-link>
+            <router-link :to="{path:'/userCenter'}"><el-dropdown-item>地址管理</el-dropdown-item></router-link>
+            <router-link :to="{path:'/userCenter'}"><el-dropdown-item divided>我的商品</el-dropdown-item></router-link>
+            <router-link :to="{path:'/userCenter'}"><el-dropdown-item>我的审批</el-dropdown-item></router-link>
+            <router-link :to="{path:'/userCenter'}"><el-dropdown-item>我的订单</el-dropdown-item></router-link>
           </el-dropdown-menu>
         </el-dropdown>
       </div>

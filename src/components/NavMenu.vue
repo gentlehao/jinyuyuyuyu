@@ -1,6 +1,6 @@
 <template>
   <div class="navMenu">
-    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
+    <el-menu :default-active="activeIndex"  mode="horizontal">
       <el-menu-item index="1">
         <router-link :to="{path:'/', query:{activeIndex:'1'}}">首页</router-link>
       </el-menu-item>
@@ -36,11 +36,16 @@ export default {
 .navMenu {
   width: 1024px;
   margin: auto;
+  text-align: center;
 }
 .navMenu .el-menu.el-menu--horizontal {
   border: none;
 }
-.el-menu-item a{
+.navMenu a {
+  font-size: 16px;
+}
+.el-menu-item a {
   display: block;
+  width: 80px;
 }
 </style>

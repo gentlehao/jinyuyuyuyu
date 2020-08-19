@@ -36,6 +36,11 @@ export default {
         if (!this.timer) {
           this.count = TIME_COUNT
           this.msgAbled = true
+          this.api('user/smsCode', 'get',{
+            mobile: this.phoneNum
+          }).then((res)=>{
+            console.log(res)
+          })
           this.timer = setInterval(() => {
             if (this.count > 0 && this.count <= TIME_COUNT) {
               this.count--

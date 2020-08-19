@@ -214,10 +214,10 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           if (formName == 'formSignIn') {
-            this.$store.dispatch('userLogin', true)
-            localStorage.setItem('isLogin', 'true')
-            this.api('123.do', 'post').then((res,err)=>{
-              // console.log(err)
+            this.api('user/', 'post').then((res)=>{
+              console.log(res)
+              this.$store.dispatch('userLogin', true)
+              localStorage.setItem('isLogin', 'true')
               this.goTo.path(this.$route.query.redirect,{})
             })
           }
@@ -254,7 +254,7 @@ export default {
 <style scoped>
 .login {
   width: 100%;
-  height: 100vh;
+  /* height: 100vh; */
   background: url('../../assets/img/LoginBack.jpg');
 }
 

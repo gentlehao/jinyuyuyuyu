@@ -18,6 +18,7 @@ import '@/assets/css/base.css'
 Vue.config.productionTip = false
 
 Vue.use(axios)
+Vue.prototype.axios = axios
 
 Vue.use(ElementUI)
 Vue.use(ViewUI)

@@ -48,7 +48,7 @@ instance.interceptors.request.use(
         if (request.method.toLocaleLowerCase() === 'post' ||
             request.method.toLocaleLowerCase() === 'put' ||
             request.method.toLocaleLowerCase() === 'delete') {
-            request.data = qs.stringify(request.data)
+            // request.data = qs.stringify(request.data)
         }
         return request
     },
@@ -114,13 +114,13 @@ instance.interceptors.response.use(
                 default:
             }
             ViewUI.LoadingBar.error()
-            ViewUI.Message.error(error.message)
+            ViewUI.Message.error({content:error.message, duration:4})
         }
         return Promise.reject(error)
     }
 )
 
-export default (url = '', method = 'GET', data = {}) => {
+export default (url = '', method = 'get', data = {}) => {
     let options = {
         url,
         cancelToken: new CancelToken(c => {
@@ -128,32 +128,16 @@ export default (url = '', method = 'GET', data = {}) => {
             window._axiosPromiseArr.push({ cancel })
         })
     }
-    method = method.toUpperCase();
 
     return new Promise((resolve, reject) => {
-        if (method === 'GET') {
+        if (method === 'GET'||method === 'get') {
             options = Object.assign(options, {
                 method: 'get',
                 params: data,
             })
-        } else if (method === 'POST') {
+        } else {
             options = Object.assign(options, {
-                method: 'post',
-                data,
-            })
-        } else if (method === 'PATCH') {
-            options = Object.assign(options, {
-                method: 'patch',
-                data,
-            })
-        } else if (method === 'PUT') {
-            options = Object.assign(options, {
-                method: 'put',
-                data,
-            })
-        } else if (method === 'DEL') {
-            options = Object.assign(options, {
-                method: 'del',
+                method: method,
                 data,
             })
         }

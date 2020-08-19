@@ -23,10 +23,10 @@
           <el-form-item label="短信验证码:" prop="msgCode">
             <el-input v-model="formSignUp.msgCode" type="text" placeholder="请输入短信验证码" />
           </el-form-item>
-          <!-- <el-form-item label="密码:" prop="password">
+          <el-form-item label="密码:" prop="password">
             <el-input v-model="formSignUp.password" type="password" placeholder="请输入密码" />
           </el-form-item>
-          <el-form-item label="确认密码:" prop="confirmPwd">
+          <!-- <el-form-item label="确认密码:" prop="confirmPwd">
             <el-input v-model="formSignUp.confirmPwd" type="password" placeholder="请再次输入密码" />
           </el-form-item>-->
           <el-form-item class="mgt-20">
@@ -139,7 +139,7 @@ export default {
       formSignUp: {
         name: '',
         phone: '',
-        // password: '',
+        password: '',
         // confirmPwd: ''
         msgCode: ''
       }, // 注册校验字段
@@ -159,10 +159,10 @@ export default {
         ],
         msgCode: [
           { required: true, message: '请输入短信验证码!', trigger: 'blur' }
-        ]
-        // password: [
-        //   { required: true, message: '请输入密码!', trigger: 'blur' }
-        // ],
+        ],
+        password: [
+          { required: true, message: '请输入密码!', trigger: 'blur' }
+        ],
         // confirmPwd: [
         //   { required: true, message: '请再次输入密码!', trigger: 'blur' }
         // ]
@@ -216,7 +216,24 @@ export default {
           if (formName == 'formSignIn') {
             this.$store.dispatch('userLogin', true)
             localStorage.setItem('isLogin', 'true')
-            this.$router.push('/')
+          }
+          else {
+            this.api('user/register', 'post',{
+              "code": this.formSignUp.msgCode,
+              "nickname": this.formSignUp.name,
+              "password": this.formSignUp.password,
+              "username": this.formSignUp.phone
+            }).then((res)=>{
+              console.log(res)
+              if(res.status == 200){
+                this.$confirm('注册成功！', '提示', {
+                  confirmButtonText: '去登录',
+                  cancelButtonText: '关闭',
+                  type: 'success'
+                })
+              }
+              this.goTo.path(this.$route.query.redirect,{})
+            })
           }
         } else {
           console.log('error submit!!')
@@ -251,7 +268,7 @@ export default {
 <style scoped>
 .signUp {
   width: 100%;
-  height: 100vh;
+  /* height: 100vh; */
   background: url('../../assets/img/LoginBack.jpg');
 }
 

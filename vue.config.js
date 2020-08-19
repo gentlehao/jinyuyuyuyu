@@ -13,7 +13,7 @@ module.exports = {
     hotOnly: false,
     proxy: {
       "/api": {
-        target: "https://39.105.164.120:3306/", // 代理路径
+        target: "http://192.168.0.104:80/", // 代理路径
         changeOrigin: true, // 将主机标头的原点更改为目标URL
         ws: true,
         pathRewrite: {
