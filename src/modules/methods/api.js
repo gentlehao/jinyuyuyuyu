@@ -54,10 +54,6 @@ instance.interceptors.request.use(
     },
     error => {
         ViewUI.LoadingBar.error()
-        //判断请求超时
-        if (error.code === 'ECONNABORTED' && error.message.indexOf('timeout') !== -1) {
-            Vue.$router.push({ path: '' })
-        }
         return Promise.reject(error)
     }
 )
@@ -76,6 +72,7 @@ instance.interceptors.response.use(
         return data
     },
     error => {
+        ViewUI.LoadingBar.error()
         if (error && error.response) {
             switch (error.response.status) {
                 case 400:
@@ -112,9 +109,14 @@ instance.interceptors.response.use(
                     error.message = 'HTTP版本不受支持'
                     break
                 default:
+                    break
             }
-            ViewUI.LoadingBar.error()
-            ViewUI.Message.error({content:error.message, duration:4})
+
+            ViewUI.Message.error({ content: error.message, duration: 4 })
+        }
+        //判断请求超时
+        if (error.code === 'ECONNABORTED' && error.message.indexOf('timeout') !== -1) {
+            ViewUI.Message.error({ content: "请求超时!", duration: 4 })
         }
         return Promise.reject(error)
     }
@@ -130,7 +132,7 @@ export default (url = '', method = 'get', data = {}) => {
     }
 
     return new Promise((resolve, reject) => {
-        if (method === 'GET'||method === 'get') {
+        if (method === 'GET' || method === 'get') {
             options = Object.assign(options, {
                 method: 'get',
                 params: data,

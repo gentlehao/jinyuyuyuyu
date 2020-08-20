@@ -30,11 +30,11 @@
             <el-input v-model="formSignUp.confirmPwd" type="password" placeholder="请再次输入密码" />
           </el-form-item>-->
           <el-form-item class="mgt-20">
-            <msg-code
+            <!-- <msg-code
               :legal="phoneLegal"
               :phone="formSignUp.phone"
               @click.native="validateField('formSignUp','phone')"
-            ></msg-code>
+            ></msg-code>-->
             <el-button class="mgl-20" @click="submitForm('formSignUp')" type="primary">注册</el-button>
           </el-form-item>
         </el-form>
@@ -141,25 +141,30 @@ export default {
         phone: '',
         // password: '',
         // confirmPwd: ''
-        msgCode: ''
+        msgCode: '',
       }, // 注册校验字段
       formSignIn: {
         phone: '',
         password: '',
         identifyCode: '',
-        msgCode: ''
+        msgCode: '',
       }, // 登录校验字段
       ruleSignUp: {
         name: [
-          { min: 1, max: 10, message: '长度在 1 到 10 个字符', trigger: 'blur' }
+          {
+            min: 1,
+            max: 10,
+            message: '长度在 1 到 10 个字符',
+            trigger: 'blur',
+          },
         ],
         phone: [
           { required: true, message: '请输入手机号!', trigger: 'blur' },
-          { validator: validatePhone, trigger: 'blur' }
+          { validator: validatePhone, trigger: 'blur' },
         ],
         msgCode: [
-          { required: true, message: '请输入短信验证码!', trigger: 'blur' }
-        ]
+          { required: true, message: '请输入短信验证码!', trigger: 'blur' },
+        ],
         // password: [
         //   { required: true, message: '请输入密码!', trigger: 'blur' }
         // ],
@@ -170,17 +175,17 @@ export default {
       ruleSignIn: {
         phone: [
           { required: true, message: '请输入手机号!', trigger: 'blur' },
-          { validator: validatePhone, trigger: 'blur' }
+          { validator: validatePhone, trigger: 'blur' },
         ],
         password: [{ required: true, message: '请输入密码!', trigger: 'blur' }],
         msgCode: [
-          { required: true, message: '请输入短信验证码!', trigger: 'blur' }
+          { required: true, message: '请输入短信验证码!', trigger: 'blur' },
         ],
         identifyCode: [
           { required: true, message: '请输入验证码!', trigger: 'blur' },
-          { validator: validateIdCode, trigger: 'blur' }
-        ]
-      } // 登录校验规则
+          { validator: validateIdCode, trigger: 'blur' },
+        ],
+      }, // 登录校验规则
     }
   },
   created() {},
@@ -211,14 +216,14 @@ export default {
 
     //提交整个表单
     submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           if (formName == 'formSignIn') {
-            this.api('user/', 'post').then((res)=>{
+            this.api('user/', 'post').then((res) => {
               console.log(res)
               this.$store.dispatch('userLogin', true)
               localStorage.setItem('isLogin', 'true')
-              this.goTo.path(this.$route.query.redirect,{})
+              this.goTo.path(this.$route.query.redirect, {})
             })
           }
         } else {
@@ -229,7 +234,7 @@ export default {
     },
     //校验部分字段
     validateField(formName, prop) {
-      this.$refs[formName].validateField(prop, error => {
+      this.$refs[formName].validateField(prop, (error) => {
         if (!error) {
           switch (prop) {
             case 'phone':
@@ -238,7 +243,7 @@ export default {
           }
         }
       })
-    }
+    },
   },
   components: {
     identify,
@@ -246,8 +251,8 @@ export default {
     backToTop,
     Top,
     Header,
-    Footer
-  }
+    Footer,
+  },
 }
 </script>
 
